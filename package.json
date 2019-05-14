@@ -1,0 +1,20 @@
+{
+  "name": "y",
+  "version": "1.0.0",
+  "description": "Nyc considers a whitespace to be a statement after instrumentation",
+  "main": "src/index.js",
+  "scripts": {
+    "test": "npm run instrument_nyc && npm run instrument_istanbul && npm run statementMap_nyc && npm run statementMap_istanbul",
+    "instrument_nyc": "nyc instrument src/index.js instrumented/nyc; js-beautify -r instrumented/nyc/src/index.js",
+    "instrument_istanbul": "istanbul instrument src/index.js --output instrumented/istanbul/src/index.js; js-beautify -r instrumented/istanbul/src/index.js",
+    "statementMap_nyc": "sed -n '/^        statementMap: {/,/^        },/p' instrumented/nyc/src/index.js | sed 's/\"//g' > statementMap_nyc.txt",
+    "statementMap_istanbul": "sed -n '/^        \"statementMap\": {/,/^        },/p' instrumented/istanbul/src/index.js |  sed 's/\"//g' > statementMap_istanbul.txt"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "istanbul": "^0.4.5",
+    "js-beautify": "^1.10.0",
+    "nyc": "^14.1.1"
+  }
+}
